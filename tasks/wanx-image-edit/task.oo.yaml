@@ -1,0 +1,95 @@
+inputs_def:
+  - handle: prompt
+    description: Text prompt describing desired image edits (1-2000 characters)
+    json_schema:
+      type: string
+      ui:widget: text
+    nullable: false
+
+  - handle: imageURLs
+    description: Array of image URLs to be edited (1-4 images)
+    json_schema:
+      type: array
+      items:
+        type: string
+    nullable: false
+
+  - group: Advanced Options
+    collapsed: false
+
+  - handle: model
+    description: AI model to use for image editing
+    json_schema:
+      enum:
+        - wan2.6-image
+      ui:options:
+        labels:
+          - Wan 2.6 Image
+    value: wan2.6-image
+    nullable: true
+
+  - handle: negativePrompt
+    description: Text describing unwanted elements in the output (max 500 characters)
+    json_schema:
+      type: string
+      ui:widget: text
+    nullable: true
+
+  - handle: size
+    description: Output image dimensions in 'width*height' format
+    json_schema:
+      type: string
+    value: 1024*1024
+    nullable: true
+
+  - handle: n
+    description: Number of images to generate (1-4)
+    json_schema:
+      type: number
+    value: 1
+    nullable: true
+
+  - handle: promptExtend
+    description: Enable AI-powered prompt enhancement and rewriting
+    json_schema:
+      type: boolean
+    value: true
+    nullable: true
+
+  - handle: watermark
+    description: Add watermark to generated images
+    json_schema:
+      type: boolean
+    value: false
+    nullable: true
+
+  - handle: seed
+    description: Random seed for reproducible results (0-2147483647)
+    json_schema:
+      type: number
+    nullable: true
+
+outputs_def:
+  - handle: images
+    description: Array of URLs for the edited images
+    json_schema:
+      type: array
+      items:
+        type: string
+    nullable: false
+
+  - handle: taskId
+    description: Unique identifier for the image editing task
+    json_schema:
+      type: string
+    nullable: false
+
+executor:
+  name: nodejs
+  options:
+    entry: index.ts
+    spawn: false
+
+title: "Wanx Image Edit"
+icon: ":carbon:image-copy:"
+description: "Edits images using Wanx AI API with text prompts and advanced options"

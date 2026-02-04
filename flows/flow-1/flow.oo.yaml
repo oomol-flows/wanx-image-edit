@@ -1,0 +1,25 @@
+title: "Test Wanx Image Edit"
+description: "Test flow for Wanx image editing task"
+
+nodes:
+  - node_id: wanx-image-edit#1
+    task: self::wanx-image-edit
+    inputs_from:
+      - handle: prompt
+      - handle: imageURLs
+        value:
+          []
+      - handle: model
+        value: "wan2.6-image"
+      - handle: negativePrompt
+        value: 离开地面
+      - handle: size
+        value: "1024*1024"
+      - handle: n
+        value: 1
+      - handle: promptExtend
+        value: true
+      - handle: watermark
+        value: false
+      - handle: seed
+        value: null

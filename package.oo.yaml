@@ -1,0 +1,11 @@
+name: wanx-image-edit
+displayName: "%wanx-image-edit%"
+description: "%transform-images-with-ai-driven-editing-using-simple-text-descri%"
+version: 0.0.1
+scripts:
+  # Script executed when the container is first loaded
+  # eg: bootstrap: poetry add pandas
+  bootstrap: |
+    npm install
+    poetry install --no-root
+repository: https://github.com/oomol-flows/wanx-image-edit.git
