@@ -12,6 +12,7 @@ inputs_def:
       type: array
       items:
         type: string
+        format: uri
     nullable: false
 
   - group: Advanced Options
