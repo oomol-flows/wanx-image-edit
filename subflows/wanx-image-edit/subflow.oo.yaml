@@ -1,0 +1,154 @@
+title: Test Wanx Image Edit
+description: Test flow for Wanx image editing task
+nodes:
+  - node_id: wanx-image-edit#3
+    title: "Wanx Image Edit #3"
+    inputs_from:
+      - handle: prompt
+        value: 把图片印在西瓜上
+        from_flow:
+          - input_handle: prompt
+      - handle: imageURLs
+        value:
+          - https://fusion.oomol.com/file-upload/019343aa-c609-7498-b541-906f2860a1e2/019ceb43-587c-7000-b54f-8920f8da171a.png
+        from_flow:
+          - input_handle: imageURLs
+      - handle: model
+        value: wan2.6-image
+        from_flow:
+          - input_handle: model
+      - handle: negativePrompt
+        value: null
+        from_flow:
+          - input_handle: negativePrompt
+      - handle: size
+        value: 1024*1024
+        from_flow:
+          - input_handle: size
+      - handle: n
+        value: 2
+        from_flow:
+          - input_handle: n
+      - handle: promptExtend
+        value: true
+        from_flow:
+          - input_handle: promptExtend
+      - handle: watermark
+        value: false
+        from_flow:
+          - input_handle: watermark
+      - handle: seed
+        value: null
+        from_flow:
+          - input_handle: seed
+    task: self::wanx-image-edit-block
+  - node_id: map#1
+    title: "Map #1"
+    inputs_from:
+      - handle: array
+        from_node:
+          - node_id: wanx-image-edit#3
+            output_handle: images
+    subflow: array::map
+    slots:
+      - slot_node_id: +slot#2
+        slotflow: self::+slotflow#1
+outputs_def:
+  - handle: image_files
+    json_schema:
+      type: array
+      items:
+        type: string
+        ui:widget: file
+    nullable: false
+    description: "%mapped-array%"
+  - handle: taskId
+    json_schema:
+      type: string
+    nullable: false
+    description: Unique identifier for the image editing task
+    executor_name: nodejs
+outputs_from:
+  - handle: image_files
+    from_node:
+      - node_id: map#1
+        output_handle: array
+  - handle: taskId
+    from_node:
+      - node_id: wanx-image-edit#3
+        output_handle: taskId
+inputs_def:
+  - handle: prompt
+    json_schema:
+      type: string
+      ui:widget: text
+    nullable: false
+    description: Text prompt describing desired image edits (1-2000 characters)
+    value: 把图片印在西瓜上
+    executor_name: nodejs
+  - handle: imageURLs
+    json_schema:
+      type: array
+      items:
+        type: string
+        format: uri
+    nullable: false
+    description: Array of image URLs to be edited (1-4 images)
+    value:
+      - https://fusion.oomol.com/file-upload/019343aa-c609-7498-b541-906f2860a1e2/019ceb43-587c-7000-b54f-8920f8da171a.png
+    executor_name: nodejs
+  - group: Advanced Options
+  - handle: model
+    json_schema:
+      enum:
+        - wan2.6-image
+      ui:options:
+        labels:
+          - Wan 2.6 Image
+    nullable: true
+    description: AI model to use for image editing
+    value: wan2.6-image
+    executor_name: nodejs
+  - handle: negativePrompt
+    json_schema:
+      type: string
+      ui:widget: text
+    nullable: true
+    description: Text describing unwanted elements in the output (max 500 characters)
+    value:
+    executor_name: nodejs
+  - handle: size
+    json_schema:
+      type: string
+    nullable: true
+    description: Output image dimensions in 'width*height' format
+    value: 1024*1024
+    executor_name: nodejs
+  - handle: n
+    json_schema:
+      type: number
+    nullable: true
+    description: Number of images to generate (1-4)
+    value: 2
+    executor_name: nodejs
+  - handle: promptExtend
+    json_schema:
+      type: boolean
+    nullable: true
+    description: Enable AI-powered prompt enhancement and rewriting
+    value: true
+    executor_name: nodejs
+  - handle: watermark
+    json_schema:
+      type: boolean
+    nullable: true
+    description: Add watermark to generated images
+    value: false
+    executor_name: nodejs
+  - handle: seed
+    json_schema:
+      type: number
+    nullable: true
+    description: Random seed for reproducible results (0-2147483647)
+    value:
+    executor_name: nodejs

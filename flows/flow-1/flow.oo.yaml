@@ -2,19 +2,20 @@ title: "Test Wanx Image Edit"
 description: "Test flow for Wanx image editing task"
 
 nodes:
-  - node_id: wanx-image-edit#1
-    task: self::wanx-image-edit
+  - node_id: wanx-image-edit#4
+    title: "Test Wanx Image Edit #4"
     inputs_from:
       - handle: prompt
+        value: 把图片印在西瓜上
       - handle: imageURLs
         value:
-          []
+          - https://fusion.oomol.com/file-upload/019343aa-c609-7498-b541-906f2860a1e2/019ceb43-587c-7000-b54f-8920f8da171a.png
       - handle: model
-        value: "wan2.6-image"
+        value: wan2.6-image
       - handle: negativePrompt
-        value: 离开地面
+        value: null
       - handle: size
-        value: "1024*1024"
+        value: 1024*1024
       - handle: n
         value: 1
       - handle: promptExtend
@@ -23,3 +24,4 @@ nodes:
         value: false
       - handle: seed
         value: null
+    subflow: self::wanx-image-edit

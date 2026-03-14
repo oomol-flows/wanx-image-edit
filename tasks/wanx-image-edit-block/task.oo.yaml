@@ -34,6 +34,7 @@ inputs_def:
     json_schema:
       type: string
       ui:widget: text
+    value:
     nullable: true
 
   - handle: size
@@ -68,6 +69,7 @@ inputs_def:
     description: Random seed for reproducible results (0-2147483647)
     json_schema:
       type: number
+    value:
     nullable: true
 
 outputs_def:
@@ -94,3 +96,4 @@ executor:
 title: "Wanx Image Edit"
 icon: ":carbon:image-copy:"
 description: "Edits images using Wanx AI API with text prompts and advanced options"
+private: true
